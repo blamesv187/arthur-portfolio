@@ -1,0 +1,121 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #1d1d1f;
+  --muted: #86868b;
+  --border: #e8e8ed;
+  --card-bg: #f5f5f7;
+  --marquee-card-width: 300px;
+  --marquee-card-height: 140px;
+  --marquee-gap: 8px;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", system-ui,
+    sans-serif;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+@keyframes marquee-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.marquee-section {
+  width: 100%;
+}
+
+.marquee-viewport {
+  width: 100%;
+  overflow-x: clip;
+  overflow-y: visible;
+  min-height: calc(
+    var(--marquee-card-height) * 2 + var(--marquee-gap) + 2px
+  );
+  padding-block: 1px;
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 10%,
+    black 90%,
+    transparent
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 10%,
+    black 90%,
+    transparent
+  );
+}
+
+.marquee-rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--marquee-gap);
+  height: calc(var(--marquee-card-height) * 2 + var(--marquee-gap));
+}
+
+.marquee-row {
+  width: 100%;
+  height: var(--marquee-card-height);
+  min-height: var(--marquee-card-height);
+  overflow: visible;
+}
+
+.marquee-track {
+  display: flex;
+  align-items: stretch;
+  gap: var(--marquee-gap);
+  width: max-content;
+  height: var(--marquee-card-height);
+  will-change: transform;
+}
+
+.marquee-track-left {
+  animation: marquee-left 60s linear infinite;
+}
+
+.marquee-track-right {
+  animation: marquee-right 60s linear infinite;
+}
+
+.marquee-card {
+  box-sizing: border-box;
+  flex: 0 0 var(--marquee-card-width);
+  width: var(--marquee-card-width);
+  height: var(--marquee-card-height);
+  margin: 0;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background-color: var(--card-bg);
+}
+
+.marquee-card__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
