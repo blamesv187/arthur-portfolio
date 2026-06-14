@@ -5,6 +5,27 @@
   --marquee-card-height: 160px;
   --marquee-gap: 8px;
   --layout-section-gap: 56px;
+
+  --background: #ffffff;
+  --foreground: #1d1d1f;
+  --foreground-secondary: #6e6e73;
+  --foreground-tertiary: #86868b;
+
+  --surface: #ffffff;
+  --surface-secondary: #f5f5f7;
+  --surface-hover: #f5f5f7;
+
+  --border: #e5e5e5;
+  --border-secondary: #d2d2d7;
+
+  --placeholder-bg: #f5f5f7;
+  --placeholder-line: rgba(0, 0, 0, 0.04);
+
+  --button-bg: #ffffff;
+  --button-hover-bg: #f5f5f7;
+
+  --muted: var(--foreground-tertiary);
+  --card-bg: var(--surface-secondary);
 }
 
 [data-theme="light"] {
@@ -96,15 +117,7 @@ html:not([data-theme]) {
 html {
   background-color: var(--background);
   color: var(--foreground);
-}
-
-html[data-theme="light"],
-html:not([data-theme]) {
   color-scheme: light;
-}
-
-html[data-theme="dark"] {
-  color-scheme: dark;
 }
 
 body {
@@ -166,69 +179,6 @@ main,
 
 .site-nav__separator {
   color: var(--border-secondary);
-}
-
-.theme-toggle {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 60;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  padding: 0;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: var(--surface);
-  color: var(--foreground);
-  cursor: pointer;
-  transition: background-color 180ms ease, border-color 180ms ease,
-    transform 180ms ease;
-}
-
-@media (min-width: 768px) {
-  .theme-toggle {
-    top: 32px;
-    right: 32px;
-  }
-}
-
-.theme-toggle:hover {
-  background: var(--surface-hover);
-  border-color: var(--border-secondary);
-  transform: translateY(-1px);
-}
-
-.theme-toggle__icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  animation: themeIconEnter 240ms cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-@keyframes themeIconEnter {
-  from {
-    opacity: 0;
-    transform: scale(0.86) rotate(-18deg);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) rotate(0deg);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .theme-toggle,
-  .theme-toggle__icon {
-    animation: none;
-    transition: none;
-  }
-
-  .theme-toggle:hover {
-    transform: none;
-  }
 }
 
 .profile-avatar-ring {

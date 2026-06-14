@@ -7,7 +7,6 @@ import SmsFirewallCase from "./sms-firewall-case";
 import WalletAndPaymentCase from "./wallet-and-payment-case";
 import CrmPanelCase from "./crm-panel-case";
 import RocketCrashCase from "./rocket-crash-case";
-import ThemeToggle from "./theme-toggle";
 import CaseBackButton from "./case-back-button";
 
 const unbounded = Unbounded({
@@ -238,7 +237,6 @@ export default function HomePage() {
 
   return (
     <div className="page-shell flex min-h-screen flex-col">
-      <ThemeToggle />
       {isCaseDetail ? (
         <CaseBackButton onClick={() => setView("cases")} />
       ) : null}
