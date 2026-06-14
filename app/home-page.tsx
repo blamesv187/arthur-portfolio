@@ -46,7 +46,6 @@ const bottomRowImages = [
 
 const cases = [
   {
-    number: "01",
     title: "SMS Firewall",
     slug: "sms-firewall" as const,
     description:
@@ -54,7 +53,6 @@ const cases = [
     image: "/cases/previews/sms-firewall.png",
   },
   {
-    number: "02",
     title: "Wallet and Payment",
     slug: "wallet-and-payment" as const,
     description:
@@ -62,7 +60,6 @@ const cases = [
     image: "/cases/previews/wallet-and-payment.png",
   },
   {
-    number: "03",
     title: "CRM Panel",
     slug: "crm-panel" as const,
     description:
@@ -70,7 +67,6 @@ const cases = [
     image: "/cases/previews/crm-panel.png",
   },
   {
-    number: "04",
     title: "Rocket Crash",
     slug: "rocket-crash" as const,
     description:
@@ -308,7 +304,7 @@ export default function HomePage() {
               <div className="cases-list">
                 {cases.map((caseItem, index) => (
                   <CaseCard
-                    key={caseItem.number}
+                    key={caseItem.slug}
                     {...caseItem}
                     animationDelay={index * 70}
                     onClick={
