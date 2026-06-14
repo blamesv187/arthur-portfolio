@@ -282,7 +282,9 @@ export default function HomePage() {
                     Telegram
                   </a>
                   <a
-                    href="mailto:blamesv187@gmail.com"
+                    href="https://mail.google.com/mail/?view=cm&fs=1&to=blamesv187@gmail.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="profile-button rounded-full px-5 py-2 text-sm"
                   >
                     Mail
