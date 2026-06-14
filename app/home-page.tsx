@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { Unbounded } from "next/font/google";
 import SmsFirewallCase from "./sms-firewall-case";
+import WalletAndPaymentCase from "./wallet-and-payment-case";
 import ThemeToggle from "./theme-toggle";
 import CaseBackButton from "./case-back-button";
 
@@ -12,7 +13,7 @@ const unbounded = Unbounded({
   weight: "500",
 });
 
-type View = "about" | "cases" | "sms-firewall";
+type View = "about" | "cases" | "sms-firewall" | "wallet-and-payment";
 
 const topRowImages = [
   "/works/work-01.png",
@@ -48,6 +49,7 @@ const cases = [
   {
     number: "02",
     title: "Wallet and Payment",
+    slug: "wallet-and-payment" as const,
     description:
       "Mobile payment experience with deposits, balances, transaction flows, and wallet interactions.",
     image: "/cases/previews/wallet-and-payment.png",
@@ -199,10 +201,13 @@ function SiteHeader({
   view: View;
   onNavigate: (view: View) => void;
 }) {
+  const isCaseDetail =
+    view === "sms-firewall" || view === "wallet-and-payment";
+
   return (
     <header className="site-header pt-10">
       <div className="site-header__inner">
-        {view !== "sms-firewall" ? (
+        {!isCaseDetail ? (
           <SiteNav view={view} onNavigate={onNavigate} />
         ) : null}
       </div>
@@ -212,11 +217,13 @@ function SiteHeader({
 
 export default function HomePage() {
   const [view, setView] = useState<View>("about");
+  const isCaseDetail =
+    view === "sms-firewall" || view === "wallet-and-payment";
 
   return (
     <div className="page-shell flex min-h-screen flex-col">
       <ThemeToggle />
-      {view === "sms-firewall" ? (
+      {isCaseDetail ? (
         <CaseBackButton onClick={() => setView("cases")} />
       ) : null}
       <SiteHeader view={view} onNavigate={setView} />
@@ -293,14 +300,18 @@ export default function HomePage() {
                     onClick={
                       caseItem.slug === "sms-firewall"
                         ? () => setView("sms-firewall")
-                        : undefined
+                        : caseItem.slug === "wallet-and-payment"
+                          ? () => setView("wallet-and-payment")
+                          : undefined
                     }
                   />
                 ))}
               </div>
             </section>
-          ) : (
+          ) : view === "sms-firewall" ? (
             <SmsFirewallCase />
+          ) : (
+            <WalletAndPaymentCase />
           )}
         </div>
       </main>
