@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Unbounded } from "next/font/google";
 import SmsFirewallCase from "./sms-firewall-case";
 import WalletAndPaymentCase from "./wallet-and-payment-case";
+import CrmPanelCase from "./crm-panel-case";
 import ThemeToggle from "./theme-toggle";
 import CaseBackButton from "./case-back-button";
 
@@ -13,7 +14,12 @@ const unbounded = Unbounded({
   weight: "500",
 });
 
-type View = "about" | "cases" | "sms-firewall" | "wallet-and-payment";
+type View =
+  | "about"
+  | "cases"
+  | "sms-firewall"
+  | "wallet-and-payment"
+  | "crm-panel";
 
 const topRowImages = [
   "/works/work-01.png",
@@ -57,6 +63,7 @@ const cases = [
   {
     number: "03",
     title: "CRM Panel",
+    slug: "crm-panel" as const,
     description:
       "Internal CRM interface for monitoring users, managing data, reviewing activity, and supporting operator workflows.",
     image: "/cases/previews/crm-panel.png",
@@ -202,7 +209,9 @@ function SiteHeader({
   onNavigate: (view: View) => void;
 }) {
   const isCaseDetail =
-    view === "sms-firewall" || view === "wallet-and-payment";
+    view === "sms-firewall" ||
+    view === "wallet-and-payment" ||
+    view === "crm-panel";
 
   return (
     <header className="site-header pt-10">
@@ -218,7 +227,9 @@ function SiteHeader({
 export default function HomePage() {
   const [view, setView] = useState<View>("about");
   const isCaseDetail =
-    view === "sms-firewall" || view === "wallet-and-payment";
+    view === "sms-firewall" ||
+    view === "wallet-and-payment" ||
+    view === "crm-panel";
 
   return (
     <div className="page-shell flex min-h-screen flex-col">
@@ -302,7 +313,9 @@ export default function HomePage() {
                         ? () => setView("sms-firewall")
                         : caseItem.slug === "wallet-and-payment"
                           ? () => setView("wallet-and-payment")
-                          : undefined
+                          : caseItem.slug === "crm-panel"
+                            ? () => setView("crm-panel")
+                            : undefined
                     }
                   />
                 ))}
@@ -310,8 +323,10 @@ export default function HomePage() {
             </section>
           ) : view === "sms-firewall" ? (
             <SmsFirewallCase />
-          ) : (
+          ) : view === "wallet-and-payment" ? (
             <WalletAndPaymentCase />
+          ) : (
+            <CrmPanelCase />
           )}
         </div>
       </main>
