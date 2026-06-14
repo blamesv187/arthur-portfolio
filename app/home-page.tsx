@@ -4,6 +4,8 @@ import { useState } from "react";
 import Image from "next/image";
 import { Unbounded } from "next/font/google";
 import SmsFirewallCase from "./sms-firewall-case";
+import ThemeToggle from "./theme-toggle";
+import CaseBackButton from "./case-back-button";
 
 const unbounded = Unbounded({
   subsets: ["latin"],
@@ -40,29 +42,29 @@ const cases = [
     title: "SMS Firewall",
     slug: "sms-firewall" as const,
     description:
-      "Enterprise platform for telecom operators. I redesigned core workflows around rule management, errors, navigation, and a new visual editor.",
-    image: "/works/work-06.png",
+      "Редизайн enterprise-платформы для телеком-операторов: навигация, сценарии работы с правилами, обработка ошибок и новый визуальный редактор.",
+    image: "/cases/previews/sms-firewall.png",
   },
   {
     number: "02",
-    title: "AdTarget",
+    title: "Wallet and Payment",
     description:
-      "B2B advertising platform for campaign management, targeting, analytics, and internal operator workflows.",
-    image: "/works/work-14.png",
+      "Mobile payment experience with deposits, balances, transaction flows, and wallet interactions.",
+    image: "/cases/previews/wallet-and-payment.png",
   },
   {
     number: "03",
-    title: "B2C / Wallet and Payments",
+    title: "CRM Panel",
     description:
-      "Mobile wallet experience for payments, balances, deposits, and transaction flows across consumer-facing financial products.",
-    image: "/works/work-10.png",
+      "Internal CRM interface for monitoring users, managing data, reviewing activity, and supporting operator workflows.",
+    image: "/cases/previews/crm-panel.png",
   },
   {
     number: "04",
-    title: "Admin Dashboard",
+    title: "Rocket Crash",
     description:
-      "Internal dashboard for managing users, monitoring activity, reviewing system states, and supporting daily operator workflows.",
-    image: "/works/work-12.png",
+      "Mobile gaming flow with deposits, game states, wallet actions, and high-impact visual screens.",
+    image: "/cases/previews/rocket-crash.png",
   },
 ];
 
@@ -98,13 +100,15 @@ function MarqueeRow({
 }
 
 function CaseCard({
-  number,
   title,
   description,
   image,
   animationDelay,
   onClick,
-}: (typeof cases)[number] & {
+}: {
+  title: string;
+  description: string;
+  image: string;
   animationDelay?: number;
   onClick?: () => void;
 }) {
@@ -133,7 +137,6 @@ function CaseCard({
       tabIndex={onClick ? 0 : undefined}
     >
       <div className="case-card__content">
-        <p className="case-card__number">{number}</p>
         <h2 className={`case-card__title ${unbounded.className}`}>{title}</h2>
         <p className="case-card__description">{description}</p>
       </div>
@@ -158,11 +161,7 @@ function NavButton({
       type="button"
       onClick={onClick}
       aria-current={isActive ? "page" : undefined}
-      className={
-        isActive
-          ? "cursor-pointer border-0 bg-transparent p-0 font-medium text-[#1d1d1f]"
-          : "cursor-pointer border-0 bg-transparent p-0 text-[#86868b] transition-colors hover:text-[#1d1d1f]"
-      }
+      className={isActive ? "site-nav__link site-nav__link--active" : "site-nav__link"}
     >
       {label}
     </button>
@@ -176,40 +175,14 @@ function SiteNav({
   view: View;
   onNavigate: (view: View) => void;
 }) {
-  if (view === "sms-firewall") {
-    return (
-      <nav
-        className="case-detail__breadcrumbs flex items-center justify-start gap-3 text-sm tracking-wide"
-        aria-label="Main"
-      >
-        <NavButton
-          label="about"
-          isActive={false}
-          onClick={() => onNavigate("about")}
-        />
-        <span className="text-[#d2d2d7]">/</span>
-        <NavButton
-          label="cases"
-          isActive={false}
-          onClick={() => onNavigate("cases")}
-        />
-        <span className="text-[#d2d2d7]">/</span>
-        <span className="font-medium text-[#1d1d1f]">sms firewall</span>
-      </nav>
-    );
-  }
-
   return (
-    <nav
-      className="flex items-center justify-center gap-3 text-sm tracking-wide"
-      aria-label="Main"
-    >
+    <nav className="site-nav" aria-label="Main">
       <NavButton
         label="about"
         isActive={view === "about"}
         onClick={() => onNavigate("about")}
       />
-      <span className="text-[#d2d2d7]">/</span>
+      <span className="site-nav__separator">/</span>
       <NavButton
         label="cases"
         isActive={view === "cases"}
@@ -219,27 +192,41 @@ function SiteNav({
   );
 }
 
+function SiteHeader({
+  view,
+  onNavigate,
+}: {
+  view: View;
+  onNavigate: (view: View) => void;
+}) {
+  return (
+    <header className="site-header pt-10">
+      <div className="site-header__inner">
+        {view !== "sms-firewall" ? (
+          <SiteNav view={view} onNavigate={onNavigate} />
+        ) : null}
+      </div>
+    </header>
+  );
+}
+
 export default function HomePage() {
   const [view, setView] = useState<View>("about");
 
   return (
-    <div className="flex min-h-screen flex-col bg-white text-[#1d1d1f]">
-      <header className="pt-10">
-        {view === "sms-firewall" ? (
-          <div className="case-detail__nav-wrap">
-            <SiteNav view={view} onNavigate={setView} />
-          </div>
-        ) : (
-          <SiteNav view={view} onNavigate={setView} />
-        )}
-      </header>
+    <div className="page-shell flex min-h-screen flex-col">
+      <ThemeToggle />
+      {view === "sms-firewall" ? (
+        <CaseBackButton onClick={() => setView("cases")} />
+      ) : null}
+      <SiteHeader view={view} onNavigate={setView} />
 
       <main className="flex flex-1 flex-col">
         <div key={view} className="page-content">
           {view === "about" ? (
             <>
               <section className="profile-section flex flex-col items-center px-6 text-center">
-                <div className="mb-5 flex size-[116px] items-center justify-center rounded-full border border-[#e8e8ed] p-2">
+                <div className="profile-avatar-ring mb-5 flex size-[116px] items-center justify-center rounded-full border p-2">
                   <Image
                     src="/avatar.jpg"
                     alt="Arthur Gunther"
@@ -256,7 +243,7 @@ export default function HomePage() {
                   Arthur Gunther
                 </h1>
 
-                <p className="mt-2 max-w-sm text-sm leading-relaxed text-[#86868b] sm:text-[15px]">
+                <p className="profile-tagline mt-2 max-w-sm text-sm leading-relaxed sm:text-[15px]">
                   product designer / enterprise ux / design systems
                 </p>
 
@@ -265,7 +252,7 @@ export default function HomePage() {
                     href="/cv.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="rounded-full border border-[#e8e8ed] bg-white px-5 py-2 text-sm text-[#1d1d1f] transition-colors hover:bg-[#f5f5f7]"
+                    className="profile-button rounded-full px-5 py-2 text-sm"
                   >
                     CV
                   </a>
@@ -273,13 +260,13 @@ export default function HomePage() {
                     href="https://t.me/blamesvdeszx"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="rounded-full border border-[#e8e8ed] bg-white px-5 py-2 text-sm text-[#1d1d1f] transition-colors hover:bg-[#f5f5f7]"
+                    className="profile-button rounded-full px-5 py-2 text-sm"
                   >
                     Telegram
                   </a>
                   <a
                     href="mailto:blamesv187@gmail.com"
-                    className="rounded-full border border-[#e8e8ed] bg-white px-5 py-2 text-sm text-[#1d1d1f] transition-colors hover:bg-[#f5f5f7]"
+                    className="profile-button rounded-full px-5 py-2 text-sm"
                   >
                     Mail
                   </a>
@@ -318,7 +305,7 @@ export default function HomePage() {
         </div>
       </main>
 
-      <footer className="mt-auto pb-10 text-center text-sm text-[#86868b]">
+      <footer className="site-footer mt-auto pb-10 text-center text-sm">
         blamesvdeszx.design
       </footer>
     </div>
