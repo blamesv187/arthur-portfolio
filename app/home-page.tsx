@@ -6,6 +6,7 @@ import { Unbounded } from "next/font/google";
 import SmsFirewallCase from "./sms-firewall-case";
 import WalletAndPaymentCase from "./wallet-and-payment-case";
 import CrmPanelCase from "./crm-panel-case";
+import RocketCrashCase from "./rocket-crash-case";
 import ThemeToggle from "./theme-toggle";
 import CaseBackButton from "./case-back-button";
 
@@ -19,7 +20,8 @@ type View =
   | "cases"
   | "sms-firewall"
   | "wallet-and-payment"
-  | "crm-panel";
+  | "crm-panel"
+  | "rocket-crash";
 
 const topRowImages = [
   "/works/work-01.png",
@@ -57,7 +59,7 @@ const cases = [
     title: "Wallet and Payment",
     slug: "wallet-and-payment" as const,
     description:
-      "Mobile payment experience with deposits, balances, transaction flows, and wallet interactions.",
+      "Мобильный платежный сценарий: кошелек, балансы, депозит, вывод средств, история операций и подключение Web3 Wallet.",
     image: "/cases/previews/wallet-and-payment.png",
   },
   {
@@ -65,14 +67,15 @@ const cases = [
     title: "CRM Panel",
     slug: "crm-panel" as const,
     description:
-      "Internal CRM interface for monitoring users, managing data, reviewing activity, and supporting operator workflows.",
+      "Админ-панель для управления пользователями, финансовыми операциями, заявками на вывод средств и внутренними рабочими процессами.",
     image: "/cases/previews/crm-panel.png",
   },
   {
     number: "04",
     title: "Rocket Crash",
+    slug: "rocket-crash" as const,
     description:
-      "Mobile gaming flow with deposits, game states, wallet actions, and high-impact visual screens.",
+      "Мобильная crash-игра с игровым сценарием, ставками, депозитами, выводом средств, личным кабинетом и партнерской программой.",
     image: "/cases/previews/rocket-crash.png",
   },
 ];
@@ -211,7 +214,8 @@ function SiteHeader({
   const isCaseDetail =
     view === "sms-firewall" ||
     view === "wallet-and-payment" ||
-    view === "crm-panel";
+    view === "crm-panel" ||
+    view === "rocket-crash";
 
   return (
     <header className="site-header pt-10">
@@ -229,7 +233,8 @@ export default function HomePage() {
   const isCaseDetail =
     view === "sms-firewall" ||
     view === "wallet-and-payment" ||
-    view === "crm-panel";
+    view === "crm-panel" ||
+    view === "rocket-crash";
 
   return (
     <div className="page-shell flex min-h-screen flex-col">
@@ -315,7 +320,9 @@ export default function HomePage() {
                           ? () => setView("wallet-and-payment")
                           : caseItem.slug === "crm-panel"
                             ? () => setView("crm-panel")
-                            : undefined
+                            : caseItem.slug === "rocket-crash"
+                              ? () => setView("rocket-crash")
+                              : undefined
                     }
                   />
                 ))}
@@ -325,8 +332,10 @@ export default function HomePage() {
             <SmsFirewallCase />
           ) : view === "wallet-and-payment" ? (
             <WalletAndPaymentCase />
-          ) : (
+          ) : view === "crm-panel" ? (
             <CrmPanelCase />
+          ) : (
+            <RocketCrashCase />
           )}
         </div>
       </main>

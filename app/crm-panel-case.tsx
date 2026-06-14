@@ -85,8 +85,8 @@ export default function CrmPanelCase() {
           CRM Panel
         </h1>
         <p className="case-detail__intro-description">
-          Internal CRM interface for monitoring users, managing data, reviewing
-          activity, and supporting operator workflows.
+          Админ-панель для управления пользователями, финансовыми операциями,
+          заявками на вывод средств и внутренними рабочими процессами.
         </p>
       </header>
 

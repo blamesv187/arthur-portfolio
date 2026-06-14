@@ -85,8 +85,8 @@ export default function WalletAndPaymentCase() {
           Wallet and Payment
         </h1>
         <p className="case-detail__intro-description">
-          Mobile payment experience with deposits, balances, transaction flows,
-          and wallet interactions.
+          Мобильный платежный сценарий: кошелек, балансы, депозит, вывод
+          средств, история операций и подключение Web3 Wallet.
         </p>
       </header>
 

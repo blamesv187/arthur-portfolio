@@ -744,6 +744,19 @@ main,
   margin-top: 8px;
 }
 
+.case-detail--rocket-crash .case-detail__note-paragraph {
+  margin: 0 0 22px;
+  font-size: 17px;
+  line-height: 1.65;
+  font-weight: 400;
+  font-style: normal;
+  color: var(--foreground-tertiary);
+}
+
+.case-detail--rocket-crash .case-detail__note-paragraph:last-child {
+  margin-bottom: 0;
+}
+
 .case-detail .case-detail__body ul.case-detail__results-list {
   display: block;
   margin: 24px 0 0;
