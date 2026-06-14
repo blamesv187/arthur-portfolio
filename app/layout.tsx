@@ -12,9 +12,30 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const siteUrl = "https://arthurgunther.vercel.app";
+
 export const metadata: Metadata = {
   title: "Arthur Gunther",
   description: "Product designer / enterprise ux / design systems",
+  metadataBase: new URL(siteUrl),
+  openGraph: {
+    title: "Arthur Gunther",
+    description: "Product designer / enterprise ux / design systems",
+    url: siteUrl,
+    siteName: "Arthur Gunther",
+    images: [
+      {
+        url: "/og-image.png",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Arthur Gunther",
+    description: "Product designer / enterprise ux / design systems",
+    images: ["/og-image.png"],
+  },
 };
 
 export default function RootLayout({
